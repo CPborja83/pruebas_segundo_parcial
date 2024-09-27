@@ -1,0 +1,126 @@
+﻿@model IEnumerable<pruebas_segundo_parcial.Services.EstructuraItem>
+
+@{
+    ViewData["Title"] = "Cartelera";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- Título principal -->
+        <div class="title">CARTELERA CINE GUASTATOYA</div>
+
+        <!-- Área de enlaces -->
+        <div class="nav-links">
+            <a href="/Contactenos">Contáctenos</a>
+            <a href="/Primicias">Primicias</a>
+            <a href="/FormasDePago">Formas de Pago</a>
+            <a href="/Horarios">Horarios de Cartelera</a>
+        </div>
+        
+        <!-- Contenedor principal -->
+        <div class="d-flex justify-content-between">
+            <!-- Caja de mensaje -->
+            <div class="card-header">
+                Los mejores extrenos todos los dias solo aqui en el mejor cine de Guastatoya, contamos con el mejor ambiente
+            </div>
+
+            <!-- Caja de formulario -->
+            <div class="card card-form">
+                <form method="post" action="/Cartelera/Add">
+                    <div class="mb-3">
+                        <label for="Title" class="form-label">Titulo:</label>
+                        <input type="text" class="form-control" id="Title" name="Title" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Year" class="form-label">Año:</label>
+                        <input type="text" class="form-control" id="Year" name="Year" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Type" class="form-label">Genero:</label>
+                        <input type="text" class="form-control" id="Type" name="Type" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Poster" class="form-label">Imagen URL:</label>
+                        <input type="text" class="form-control" id="Poster" name="Poster" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Descripcion:</label>
+                        <textarea class="form-control" id="Description" name="Description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Ubication" class="form-label">Ubicacion:</label>
+                        <input type="text" class="form-control" id="Ubication" name="Ubication" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Estado" class="form-label">Estado:</label>
+                        <input type="checkbox" id="Estado" name="Estado" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Insertar</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Caja de tabla -->
+        <div class="table-container">
+            <h2>Peliculas en Cartelera</h2>
+            <div class="card">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Año</th>
+                            <th>Genero</th>
+                            <th>Imagen</th>
+                            <th>Descripcion</th>
+                            <th>Ubicacion</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.Year</td>
+                                <td>@item.Type</td>
+                                <td><img src="@item.Poster" alt="@item.Title" style="width: 100px;" /></td>
+                                <td>@item.Description</td>
+                                <td>@item.Ubication</td>
+                                <td>@item.Estado</td>
+                                <td>
+                                    <form method="post" action="/Cartelera/Update" class="d-inline">
+                                        <input type="hidden" name="ImdbID" value="@item.ImdbID" />
+                                        <!-- Include other fields to update -->
+                                        <button type="submit" class="btn btn-warning">Update</button>
+                                    </form>
+                                    <form method="post" action="/Cartelera/Delete" class="d-inline">
+                                        <input type="hidden" name="imdbID" value="@item.ImdbID" />
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        Mariano Galvez 2024
+        todo lo puedo en Cristo que me fortalece
+    </div>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
